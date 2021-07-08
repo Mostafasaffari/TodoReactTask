@@ -1,0 +1,17 @@
+.block-container {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  &.error {
+    border: 1px solid $danger-color;
+    background-color: lighten($danger-color, 10%);
+  }
+  &.success {
+    background-color: lighten($success-color, 50%);
+    border: 1px solid $success-color;
+    color: $success-color;
+    font-weight: 700;
+  }
+}
