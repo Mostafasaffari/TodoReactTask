@@ -8,7 +8,7 @@ import taskActions from "../../redux/task/actions";
 import { CheckBox } from "../../components/ui-kit/checkBox";
 import { Button } from "../../components/ui-kit/button/Button";
 import { TextInput } from "../../components/ui-kit/textInput/TextInput";
-import { editTaskApi } from "../../services/task";
+import { doneTaskApi, editTaskApi } from "../../services/task";
 
 const TaskList: React.FC = () => {
   const [editTaskId, setEditTaskId] = useState(-1);
@@ -24,13 +24,18 @@ const TaskList: React.FC = () => {
     setEditTaskId(-1);
     setNewTitle("");
   };
+  const isDoneHandle =
+    (id: number) => async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const data = await doneTaskApi(id);
+      dispatch(taskActions.fillTasks(data));
+    };
   return (
     <ul id="incomplete-tasks">
       {tasks.map(
         (task) =>
           !task.isDone && (
             <li key={task.id}>
-              <CheckBox />
+              <CheckBox onChange={isDoneHandle(task.id)} />
               {editTaskId !== -1 && task.id === editTaskId ? (
                 <>
                   <TextInput

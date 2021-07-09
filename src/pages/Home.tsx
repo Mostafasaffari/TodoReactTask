@@ -27,15 +27,6 @@ function App() {
 
       <h3>Todo</h3>
       <TaskList />
-      <ul>
-        <li className="editMode">
-          <input type="checkbox" />
-          <label>Go Shopping</label>
-          <input type="text" value="Go Shopping" />
-          <button className="edit">Edit</button>
-          <button className="delete">Delete</button>
-        </li>
-      </ul>
 
       <h3>Completed</h3>
       <ul id="completed-tasks">
