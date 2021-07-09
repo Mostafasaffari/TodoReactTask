@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { AppState } from "../../redux/store";
@@ -28,6 +28,7 @@ const TaskList: React.FC<IProps> = ({ type }) => {
             </li>
           );
         }
+        return null;
       })}
     </ul>
   );
