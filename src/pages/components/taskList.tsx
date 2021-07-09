@@ -5,13 +5,12 @@ import { AppState } from "../../redux/store";
 
 const TaskList: React.FC = () => {
   const { tasks } = useSelector((state: AppState) => state.Task);
-  console.log(tasks);
   return (
     <ul id="incomplete-tasks">
-      {tasks.map((task, index) => (
-        <li key={index}>
+      {tasks.map((task) => (
+        <li key={task.id}>
           <input type="checkbox" />
-          <label>{task}</label>
+          <label>{task.title}</label>
           <input type="text" />
           <button className="edit">Edit</button>
           <button className="delete">Delete</button>

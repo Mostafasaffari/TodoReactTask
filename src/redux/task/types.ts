@@ -1,7 +1,9 @@
+import { ITask } from "../../entities/task";
+
 export const FILL_TASKS = "FILL_TASKS";
 
 export interface ITaskState {
-  tasks: string[];
+  tasks: ITask[];
 }
 
 interface IFillTasks {
