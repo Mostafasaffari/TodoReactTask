@@ -23,4 +23,22 @@ const addTaskApi = (task: string): Promise<string[]> => {
   });
 };
 
-export { addTaskApi };
+const getTasksApi = (): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    try {
+      setTimeout(() => {
+        const storedTask = storage.get("Tasks");
+        if (storedTask !== null) {
+          const taskList = Array.from(JSON.parse(storedTask)) as string[];
+          resolve(taskList);
+        } else {
+          resolve([]);
+        }
+      }, 1000);
+    } catch {
+      reject();
+    }
+  });
+};
+
+export { addTaskApi, getTasksApi };

@@ -5,13 +5,16 @@ import { addTaskApi } from "../../services/task";
 
 import taskActions from "../../redux/task/actions";
 
-import { TextInput } from "../../components/ui-kit/textInput";
-import { Label } from "../../components/ui-kit/label";
-import { Button } from "../../components/ui-kit/button";
+import { TextInput } from "../../components/ui-kit/textInput/TextInput";
+import { Label } from "../../components/ui-kit/label/Label";
+import { Button } from "../../components/ui-kit/button/Button";
 
-import { InfoBlock, InfoBlockType } from "../../components/share/infoBlock";
+import {
+  InfoBlock,
+  InfoBlockType,
+} from "../../components/share/infoBlock/infoBlock";
 
-const AddItem: React.FC = () => {
+const AddTaskItem: React.FC = () => {
   const [task, setTask] = useState("");
   const [showMessage, setShowMessage] = useState<InfoBlockType | null>(null);
 
@@ -45,4 +48,4 @@ const AddItem: React.FC = () => {
   );
 };
 
-export { AddItem };
+export { AddTaskItem };
