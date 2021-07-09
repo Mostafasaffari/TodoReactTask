@@ -109,4 +109,28 @@ const doneTaskApi = (id: number): Promise<ITask[]> => {
   });
 };
 
-export { addTaskApi, getTasksApi, editTaskApi, doneTaskApi };
+const deleteTaskApi = (id: number): Promise<ITask[]> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const storedTask = storage.get("Tasks");
+      if (storedTask === null) {
+        reject();
+      } else {
+        const tasks = Array.from(JSON.parse(storedTask)) as ITask[];
+        const deleteTask = tasks.filter((s) => s.id !== id);
+        storage.set("Tasks", JSON.stringify(deleteTask));
+
+        setTimeout(() => {
+          const taskList = Array.from(
+            JSON.parse(storage.get("Tasks")!)
+          ) as ITask[];
+          resolve(taskList);
+        }, 1000);
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export { addTaskApi, getTasksApi, editTaskApi, doneTaskApi, deleteTaskApi };

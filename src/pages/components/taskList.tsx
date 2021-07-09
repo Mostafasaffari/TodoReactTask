@@ -8,7 +8,7 @@ import taskActions from "../../redux/task/actions";
 import { CheckBox } from "../../components/ui-kit/checkBox";
 import { Button } from "../../components/ui-kit/button/Button";
 import { TextInput } from "../../components/ui-kit/textInput/TextInput";
-import { doneTaskApi, editTaskApi } from "../../services/task";
+import { deleteTaskApi, doneTaskApi, editTaskApi } from "../../services/task";
 
 const TaskList: React.FC = () => {
   const [editTaskId, setEditTaskId] = useState(-1);
@@ -24,11 +24,16 @@ const TaskList: React.FC = () => {
     setEditTaskId(-1);
     setNewTitle("");
   };
-  const isDoneHandle =
-    (id: number) => async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const data = await doneTaskApi(id);
+  const isDoneHandle = (id: number) => async () => {
+    const data = await doneTaskApi(id);
+    dispatch(taskActions.fillTasks(data));
+  };
+  const deleteTaskHandle = (id: number) => async () => {
+    if (window.confirm("Are you sure?")) {
+      const data = await deleteTaskApi(id);
       dispatch(taskActions.fillTasks(data));
-    };
+    }
+  };
   return (
     <ul id="incomplete-tasks">
       {tasks.map(
@@ -55,7 +60,12 @@ const TaskList: React.FC = () => {
                   >
                     Edit
                   </Button>
-                  <Button className="delete">Delete</Button>
+                  <Button
+                    className="delete"
+                    onClick={deleteTaskHandle(task.id)}
+                  >
+                    Delete
+                  </Button>
                 </>
               )}
             </li>
