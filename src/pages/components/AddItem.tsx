@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { storage } from "../../helpers/localStorage";
+import { addTaskApi } from "../../services/task";
 
 import { TextInput } from "../../components/ui-kit/textInput";
 import { Label } from "../../components/ui-kit/label";
@@ -12,16 +12,10 @@ const AddItem: React.FC = () => {
   const [task, setTask] = useState("");
   const [showMessage, setShowMessage] = useState<InfoBlockType | null>(null);
 
-  const addItemHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const addItemHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const storedTask = storage.get("Tasks");
-    if (storedTask === null) {
-      storage.set("Tasks", JSON.stringify([task]));
-    } else {
-      const tasks = Array.from(JSON.parse(storedTask));
-      tasks.push(task);
-      storage.set("Tasks", JSON.stringify(tasks));
-    }
+    const data = await addTaskApi(task);
+    console.log(data);
     setShowMessage("success");
     setTask("");
     setTimeout(() => {
