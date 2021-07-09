@@ -16,7 +16,7 @@ const addTaskApi = (task: string): Promise<ITask[]> => {
         const tasks = Array.from(JSON.parse(storedTask)) as ITask[];
         newTask = {
           ...newTask,
-          id: tasks[tasks.length - 1].id,
+          id: tasks[tasks.length - 1].id + 1,
         };
         tasks.push(newTask);
         storage.set("Tasks", JSON.stringify(tasks));
@@ -51,4 +51,33 @@ const getTasksApi = (): Promise<ITask[]> => {
   });
 };
 
-export { addTaskApi, getTasksApi };
+const editTaskApi = (id: number, newTitle: string): Promise<ITask[]> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const storedTask = storage.get("Tasks");
+      if (storedTask === null) {
+        reject();
+      } else {
+        const tasks = Array.from(JSON.parse(storedTask)) as ITask[];
+
+        const editTask = tasks.find((s) => s.id === id);
+        if (editTask) {
+          editTask.title = newTitle;
+          storage.set("Tasks", JSON.stringify(tasks));
+          setTimeout(() => {
+            const taskList = Array.from(
+              JSON.parse(storage.get("Tasks")!)
+            ) as ITask[];
+            resolve(taskList);
+          }, 1000);
+        } else {
+          reject();
+        }
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export { addTaskApi, getTasksApi, editTaskApi };

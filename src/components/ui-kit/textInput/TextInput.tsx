@@ -6,7 +6,7 @@ interface IProps {
   className?: string;
   value?: string;
   id?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const TextInput: React.FC<IProps> = ({ id, className, value, onChange }) => {
   return (

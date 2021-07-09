@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     const getTasks = async () => {
       const data = await getTasksApi();
-      console.log(data);
       if (data.length) {
         dispatch(taskActions.fillTasks(data));
       }
