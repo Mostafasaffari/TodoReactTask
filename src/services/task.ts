@@ -1,6 +1,6 @@
 import { storage } from "../helpers/localStorage";
 
-const addTaskApi = (task: string) => {
+const addTaskApi = (task: string): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     try {
       const storedTask = storage.get("Tasks");
@@ -12,7 +12,9 @@ const addTaskApi = (task: string) => {
         storage.set("Tasks", JSON.stringify(tasks));
       }
       setTimeout(() => {
-        const taskList = Array.from(JSON.parse(storage.get("Tasks")!));
+        const taskList = Array.from(
+          JSON.parse(storage.get("Tasks")!)
+        ) as string[];
         resolve(taskList);
       }, 1000);
     } catch {

@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { addTaskApi } from "../../services/task";
+
+import taskActions from "../../redux/task/actions";
 
 import { TextInput } from "../../components/ui-kit/textInput";
 import { Label } from "../../components/ui-kit/label";
@@ -12,10 +15,12 @@ const AddItem: React.FC = () => {
   const [task, setTask] = useState("");
   const [showMessage, setShowMessage] = useState<InfoBlockType | null>(null);
 
+  const dispatch = useDispatch();
+
   const addItemHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await addTaskApi(task);
-    console.log(data);
+    dispatch(taskActions.fillTasks(data));
     setShowMessage("success");
     setTask("");
     setTimeout(() => {
