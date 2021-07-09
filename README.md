@@ -1,2 +1,5 @@
 # TodoReactTask
-Roman
+
+### npm install
+
+### npm start
