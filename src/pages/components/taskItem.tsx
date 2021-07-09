@@ -11,8 +11,9 @@ import { deleteTaskApi, doneTaskApi, editTaskApi } from "../../services/task";
 interface IProps {
   id: number;
   title: string;
+  isDone?: boolean;
 }
-const TaskItem: React.FC<IProps> = ({ id, title }) => {
+const TaskItem: React.FC<IProps> = ({ id, title, isDone }) => {
   const [editTaskId, setEditTaskId] = useState(-1);
   const [newTitle, setNewTitle] = useState("");
 
@@ -36,7 +37,7 @@ const TaskItem: React.FC<IProps> = ({ id, title }) => {
   };
   return (
     <>
-      <CheckBox onChange={isDoneHandle(id)} />
+      <CheckBox onChange={isDoneHandle(id)} checked={isDone} />
       {editTaskId !== -1 && id === editTaskId ? (
         <>
           <TextInput

@@ -5,19 +5,30 @@ import { AppState } from "../../redux/store";
 
 import { TaskItem } from "./taskItem";
 
-const TaskList: React.FC = () => {
+interface IProps {
+  type: "Completed" | "Todo";
+}
+const TaskList: React.FC<IProps> = ({ type }) => {
   const { tasks } = useSelector((state: AppState) => state.Task);
 
   return (
-    <ul id="incomplete-tasks">
-      {tasks.map(
-        (task) =>
-          !task.isDone && (
+    <ul id={type === "Todo" ? "incomplete-tasks" : "completed-tasks"}>
+      {tasks.map((task) => {
+        if (!task.isDone && type === "Todo") {
+          return (
             <li key={task.id}>
               <TaskItem id={task.id} title={task.title} />
             </li>
-          )
-      )}
+          );
+        }
+        if (task.isDone && type === "Completed") {
+          return (
+            <li key={task.id}>
+              <TaskItem id={task.id} title={task.title} isDone={task.isDone} />
+            </li>
+          );
+        }
+      })}
     </ul>
   );
 };

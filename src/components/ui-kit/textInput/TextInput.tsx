@@ -16,6 +16,7 @@ const TextInput: React.FC<IProps> = ({ id, className, value, onChange }) => {
       id={id}
       onChange={onChange}
       className={className}
+      autoComplete="off"
     />
   );
 };
