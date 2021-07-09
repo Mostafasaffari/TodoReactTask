@@ -22,10 +22,14 @@ const AddTaskItem: React.FC = () => {
 
   const addItemHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await addTaskApi(task);
-    dispatch(taskActions.fillTasks(data));
-    setShowMessage("success");
-    setTask("");
+    if (task) {
+      const data = await addTaskApi(task);
+      dispatch(taskActions.fillTasks(data));
+      setShowMessage("success");
+      setTask("");
+    } else {
+      setShowMessage("error");
+    }
     setTimeout(() => {
       setShowMessage(null);
     }, 3000);
@@ -33,7 +37,14 @@ const AddTaskItem: React.FC = () => {
   return (
     <Fragment>
       {showMessage && (
-        <InfoBlock type={showMessage} message="Adding Task done!" />
+        <InfoBlock
+          type={showMessage}
+          message={
+            showMessage === "success"
+              ? "Adding Task done!"
+              : "Please enter task title!"
+          }
+        />
       )}
       <form onSubmit={addItemHandler}>
         <Label htmlFor="new-task">Add Item</Label>
